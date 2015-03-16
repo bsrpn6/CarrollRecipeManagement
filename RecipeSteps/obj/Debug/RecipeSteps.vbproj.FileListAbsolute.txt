@@ -1,0 +1,15 @@
+C:\Users\admin\Documents\Visual Studio 2012\Projects\RecipeSteps\RecipeSteps\bin\Debug\RecipeSteps.exe.config
+C:\Users\admin\Documents\Visual Studio 2012\Projects\RecipeSteps\RecipeSteps\bin\Debug\RecipeSteps.exe
+C:\Users\admin\Documents\Visual Studio 2012\Projects\RecipeSteps\RecipeSteps\bin\Debug\RecipeSteps.pdb
+C:\Users\admin\Documents\Visual Studio 2012\Projects\RecipeSteps\RecipeSteps\bin\Debug\RecipeSteps.xml
+C:\Users\admin\Documents\Visual Studio 2012\Projects\RecipeSteps\RecipeSteps\obj\Debug\WindowsApplication1.Resources.resources
+C:\Users\admin\Documents\Visual Studio 2012\Projects\RecipeSteps\RecipeSteps\obj\Debug\RecipeSteps.vbproj.GenerateResource.Cache
+C:\Users\admin\Documents\Visual Studio 2012\Projects\RecipeSteps\RecipeSteps\obj\Debug\RecipeSteps.exe
+C:\Users\admin\Documents\Visual Studio 2012\Projects\RecipeSteps\RecipeSteps\obj\Debug\RecipeSteps.xml
+C:\Users\admin\Documents\Visual Studio 2012\Projects\RecipeSteps\RecipeSteps\obj\Debug\RecipeSteps.pdb
+C:\Users\admin\Documents\Visual Studio 2012\Projects\RecipeSteps\RecipeSteps\obj\Debug\WindowsApplication1.RecipeSelect.resources
+C:\Users\admin\Documents\Visual Studio 2012\Projects\RecipeSteps\RecipeSteps\obj\Debug\WindowsApplication1.RecipeEdit.resources
+C:\Users\admin\Documents\Visual Studio 2012\Projects\RecipeSteps\RecipeSteps\obj\Debug\WindowsApplication1.ViewRecipeKey.resources
+C:\Users\admin\Documents\Visual Studio 2012\Projects\RecipeSteps\RecipeSteps\obj\Debug\WindowsApplication1.StepEdit.resources
+C:\Users\admin\Documents\Visual Studio 2012\Projects\RecipeSteps\RecipeSteps\obj\Debug\WindowsApplication1.ChooseBOM.resources
+C:\Users\admin\Documents\Visual Studio 2012\Projects\RecipeSteps\RecipeSteps\obj\Debug\WindowsApplication1.ProcEdit.resources
