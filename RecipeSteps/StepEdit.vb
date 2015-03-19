@@ -7,10 +7,12 @@ Imports System.Data.SqlClient
 
 Public Class StepEdit
 
+    'SQL Connection
     Private myConn As SqlConnection
     Private myCmd As SqlCommand
     Private myReader As SqlDataReader
 
+    'Form Variables
     Dim RecipeKey As String
     Dim RecipeID As Integer
     Dim RecipeStepID As Integer
@@ -29,8 +31,10 @@ Public Class StepEdit
     Dim ParamLoLoDev As Integer
     Dim ParamUOM As String
 
+    'Used to tell parent form item has changed and alert user if changes need saved
     Dim FormChanged As Boolean = False
 
+    'Open Form
     Public Sub New(ByVal PassedRecipeKey As String, ByVal PassedRecipeID As String, ByVal PassedRecipeStepID As Integer)
 
         InitializeComponent()
@@ -48,19 +52,7 @@ Public Class StepEdit
 
     End Sub
 
-    Public Property FormHasChanged() As Boolean
-
-        Get
-            Return FormChanged
-        End Get
-
-        Set(ByVal value As Boolean)
-            FormChanged = value
-        End Set
-
-    End Property
-
-
+    'Initialize Form
     Private Sub LoadStep()
 
         'Create a Connection object.
@@ -162,53 +154,7 @@ Public Class StepEdit
 
     End Sub
 
-    Private Sub ExitCmdBtn_Click(sender As Object, e As EventArgs) Handles ExitCmdBtn.Click
-
-        If FormChanged Then
-            If MessageBox.Show("Changes have been made. Do you wish to save?", "Save?", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-                UpdateRow()
-            End If
-        Else
-            FormChanged = False
-        End If
-
-        Close()
-
-    End Sub
-
-    Private Sub SaveCmdBtn_Click(sender As Object, e As EventArgs) Handles SaveCmdBtn.Click
-
-        If FormChanged Then
-            If MessageBox.Show("Are you sure you want to save these changes?", "Save?", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-                UpdateRow()
-            End If
-        End If
-
-        Close()
-
-    End Sub
-
-    Private Sub UpdateRow()
-
-        'Create a Connection object.
-        myConn = DatabaseConnection.CreateSQLConnection()
-
-        'Create a Command object.
-        myCmd = myConn.CreateCommand
-
-        myCmd.CommandText = "UPDATE [dbo].[mtRecipeSteps] SET [StepInstructions] = '" & StepInstructionsTxtBox.Text & "', [ItemQtyPct] = '" & ItemQtyPctTxtBox.Text & "', [ItemQtyFixed] = '" & ItemQtyFixedTxtBox.Text & "', [ParamTarget] = '" & ParamTargetTxtBox.Text & "' WHERE [RecipeStepID] = " & RecipeStepID
-
-        'Open the connection.
-        myConn.Open()
-
-        myCmd.ExecuteNonQuery()
-
-        'Close the reader and the database connection.
-        myReader.Close()
-        myConn.Close()
-
-    End Sub
-
+    'Text has changed - validate and alert
     Private Sub ItemQtyPctTxtBox_Leave(sender As Object, e As EventArgs) Handles ItemQtyPctTxtBox.Leave
 
         If ((ItemQtyFixedTxtBox.Text < 0) Or (ItemQtyFixedTxtBox.Text > 100)) Then
@@ -236,7 +182,6 @@ Public Class StepEdit
         FormChanged = True
     End Sub
 
-
     Private Sub ParamTargetTxtBox_Leave(sender As Object, e As EventArgs) Handles ParamTargetTxtBox.Leave
 
         If Not IsNumeric(ParamTargetTxtBox.Text) Then
@@ -251,6 +196,7 @@ Public Class StepEdit
 
     End Sub
 
+    'Helper Methods
     Private Sub DeleteStep()
 
         'Create a Connection object.
@@ -295,10 +241,71 @@ Public Class StepEdit
 
     End Sub
 
+    Private Sub UpdateRow()
+
+        'Create a Connection object.
+        myConn = DatabaseConnection.CreateSQLConnection()
+
+        'Create a Command object.
+        myCmd = myConn.CreateCommand
+
+        myCmd.CommandText = "UPDATE [dbo].[mtRecipeSteps] SET [StepInstructions] = '" & StepInstructionsTxtBox.Text & "', [ItemQtyPct] = '" & ItemQtyPctTxtBox.Text & "', [ItemQtyFixed] = '" & ItemQtyFixedTxtBox.Text & "', [ParamTarget] = '" & ParamTargetTxtBox.Text & "' WHERE [RecipeStepID] = " & RecipeStepID
+
+        'Open the connection.
+        myConn.Open()
+
+        myCmd.ExecuteNonQuery()
+
+        'Close the reader and the database connection.
+        myReader.Close()
+        myConn.Close()
+
+    End Sub
+
+    'Buttons
+    Private Sub SaveCmdBtn_Click(sender As Object, e As EventArgs) Handles SaveCmdBtn.Click
+
+        If FormChanged Then
+            If MessageBox.Show("Are you sure you want to save these changes?", "Save?", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+                UpdateRow()
+            End If
+        End If
+
+        Close()
+
+    End Sub
+
     Private Sub DeleteCmdBtn_Click(sender As Object, e As EventArgs) Handles DeleteCmdBtn.Click
 
         DeleteStep()
 
     End Sub
+
+    'Close Form
+    Private Sub ExitCmdBtn_Click(sender As Object, e As EventArgs) Handles ExitCmdBtn.Click
+
+        If FormChanged Then
+            If MessageBox.Show("Changes have been made. Do you wish to save?", "Save?", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+                UpdateRow()
+            End If
+        Else
+            FormChanged = False
+        End If
+
+        Close()
+
+    End Sub
+
+    Public Property FormHasChanged() As Boolean
+
+        Get
+            Return FormChanged
+        End Get
+
+        Set(ByVal value As Boolean)
+            FormChanged = value
+        End Set
+
+    End Property
 
 End Class

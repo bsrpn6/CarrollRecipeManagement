@@ -22,6 +22,7 @@ Partial Class RecipeEdit
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(RecipeEdit))
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
         Me.StepNum = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.StepType = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -40,6 +41,13 @@ Partial Class RecipeEdit
         Me.ProcTemplateID = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridView3 = New System.Windows.Forms.DataGridView()
+        Me.DataGridViewTextBoxColumn5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn7 = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.DataGridViewTextBoxColumn8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.RecipeKeyTxtBox = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
@@ -52,25 +60,24 @@ Partial Class RecipeEdit
         Me.AllRdoBtn = New System.Windows.Forms.RadioButton()
         Me.ProcCboBox = New System.Windows.Forms.ComboBox()
         Me.DeleteRevCmdBtn = New System.Windows.Forms.Button()
-        Me.DataGridViewTextBoxColumn5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn7 = New System.Windows.Forms.DataGridViewCheckBoxColumn()
-        Me.DataGridViewTextBoxColumn8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MoveStepDownBtn = New System.Windows.Forms.PictureBox()
+        Me.MoveStepUpBtn = New System.Windows.Forms.PictureBox()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView3, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel1.SuspendLayout()
+        CType(Me.MoveStepDownBtn, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.MoveStepUpBtn, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'DataGridView1
         '
         Me.DataGridView1.AllowDrop = True
+        Me.DataGridView1.AllowUserToAddRows = False
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.StepNum, Me.StepType, Me.Item, Me.Description, Me.Target, Me.Column6, Me.Column7, Me.Column1, Me.Instructions, Me.StepID})
-        Me.DataGridView1.Location = New System.Drawing.Point(503, 94)
+        Me.DataGridView1.Location = New System.Drawing.Point(489, 94)
+        Me.DataGridView1.MultiSelect = False
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.ReadOnly = True
         Me.DataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
@@ -206,6 +213,56 @@ Partial Class RecipeEdit
         Me.DataGridView3.Size = New System.Drawing.Size(444, 292)
         Me.DataGridView3.TabIndex = 2
         '
+        'DataGridViewTextBoxColumn5
+        '
+        Me.DataGridViewTextBoxColumn5.HeaderText = "Item"
+        Me.DataGridViewTextBoxColumn5.Name = "DataGridViewTextBoxColumn5"
+        Me.DataGridViewTextBoxColumn5.ReadOnly = True
+        Me.DataGridViewTextBoxColumn5.Width = 70
+        '
+        'DataGridViewTextBoxColumn6
+        '
+        Me.DataGridViewTextBoxColumn6.HeaderText = "Description"
+        Me.DataGridViewTextBoxColumn6.Name = "DataGridViewTextBoxColumn6"
+        Me.DataGridViewTextBoxColumn6.ReadOnly = True
+        Me.DataGridViewTextBoxColumn6.Width = 150
+        '
+        'DataGridViewTextBoxColumn7
+        '
+        Me.DataGridViewTextBoxColumn7.HeaderText = "Staged"
+        Me.DataGridViewTextBoxColumn7.Name = "DataGridViewTextBoxColumn7"
+        Me.DataGridViewTextBoxColumn7.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DataGridViewTextBoxColumn7.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        Me.DataGridViewTextBoxColumn7.Width = 40
+        '
+        'DataGridViewTextBoxColumn8
+        '
+        Me.DataGridViewTextBoxColumn8.HeaderText = "Percent"
+        Me.DataGridViewTextBoxColumn8.Name = "DataGridViewTextBoxColumn8"
+        Me.DataGridViewTextBoxColumn8.ReadOnly = True
+        Me.DataGridViewTextBoxColumn8.Width = 50
+        '
+        'Column3
+        '
+        Me.Column3.HeaderText = "Fixed"
+        Me.Column3.Name = "Column3"
+        Me.Column3.ReadOnly = True
+        Me.Column3.Width = 50
+        '
+        'Column4
+        '
+        Me.Column4.HeaderText = "UOM"
+        Me.Column4.Name = "Column4"
+        Me.Column4.ReadOnly = True
+        Me.Column4.Width = 40
+        '
+        'Column5
+        '
+        Me.Column5.HeaderText = "BOM ID"
+        Me.Column5.Name = "Column5"
+        Me.Column5.ReadOnly = True
+        Me.Column5.Visible = False
+        '
         'Label1
         '
         Me.Label1.AutoSize = True
@@ -256,7 +313,7 @@ Partial Class RecipeEdit
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.ForeColor = System.Drawing.Color.White
-        Me.Label4.Location = New System.Drawing.Point(499, 66)
+        Me.Label4.Location = New System.Drawing.Point(485, 66)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(57, 24)
         Me.Label4.TabIndex = 7
@@ -336,55 +393,23 @@ Partial Class RecipeEdit
         Me.DeleteRevCmdBtn.Text = "Delete"
         Me.DeleteRevCmdBtn.UseVisualStyleBackColor = True
         '
-        'DataGridViewTextBoxColumn5
+        'MoveStepDownBtn
         '
-        Me.DataGridViewTextBoxColumn5.HeaderText = "Item"
-        Me.DataGridViewTextBoxColumn5.Name = "DataGridViewTextBoxColumn5"
-        Me.DataGridViewTextBoxColumn5.ReadOnly = True
-        Me.DataGridViewTextBoxColumn5.Width = 70
+        Me.MoveStepDownBtn.Image = CType(resources.GetObject("MoveStepDownBtn.Image"), System.Drawing.Image)
+        Me.MoveStepDownBtn.Location = New System.Drawing.Point(1240, 170)
+        Me.MoveStepDownBtn.Name = "MoveStepDownBtn"
+        Me.MoveStepDownBtn.Size = New System.Drawing.Size(34, 32)
+        Me.MoveStepDownBtn.TabIndex = 48
+        Me.MoveStepDownBtn.TabStop = False
         '
-        'DataGridViewTextBoxColumn6
+        'MoveStepUpBtn
         '
-        Me.DataGridViewTextBoxColumn6.HeaderText = "Description"
-        Me.DataGridViewTextBoxColumn6.Name = "DataGridViewTextBoxColumn6"
-        Me.DataGridViewTextBoxColumn6.ReadOnly = True
-        Me.DataGridViewTextBoxColumn6.Width = 150
-        '
-        'DataGridViewTextBoxColumn7
-        '
-        Me.DataGridViewTextBoxColumn7.HeaderText = "Staged"
-        Me.DataGridViewTextBoxColumn7.Name = "DataGridViewTextBoxColumn7"
-        Me.DataGridViewTextBoxColumn7.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DataGridViewTextBoxColumn7.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
-        Me.DataGridViewTextBoxColumn7.Width = 40
-        '
-        'DataGridViewTextBoxColumn8
-        '
-        Me.DataGridViewTextBoxColumn8.HeaderText = "Percent"
-        Me.DataGridViewTextBoxColumn8.Name = "DataGridViewTextBoxColumn8"
-        Me.DataGridViewTextBoxColumn8.ReadOnly = True
-        Me.DataGridViewTextBoxColumn8.Width = 50
-        '
-        'Column3
-        '
-        Me.Column3.HeaderText = "Fixed"
-        Me.Column3.Name = "Column3"
-        Me.Column3.ReadOnly = True
-        Me.Column3.Width = 50
-        '
-        'Column4
-        '
-        Me.Column4.HeaderText = "UOM"
-        Me.Column4.Name = "Column4"
-        Me.Column4.ReadOnly = True
-        Me.Column4.Width = 40
-        '
-        'Column5
-        '
-        Me.Column5.HeaderText = "BOM ID"
-        Me.Column5.Name = "Column5"
-        Me.Column5.ReadOnly = True
-        Me.Column5.Visible = False
+        Me.MoveStepUpBtn.Image = CType(resources.GetObject("MoveStepUpBtn.Image"), System.Drawing.Image)
+        Me.MoveStepUpBtn.Location = New System.Drawing.Point(1240, 112)
+        Me.MoveStepUpBtn.Name = "MoveStepUpBtn"
+        Me.MoveStepUpBtn.Size = New System.Drawing.Size(34, 32)
+        Me.MoveStepUpBtn.TabIndex = 47
+        Me.MoveStepUpBtn.TabStop = False
         '
         'RecipeEdit
         '
@@ -392,6 +417,8 @@ Partial Class RecipeEdit
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(1274, 821)
+        Me.Controls.Add(Me.MoveStepDownBtn)
+        Me.Controls.Add(Me.MoveStepUpBtn)
         Me.Controls.Add(Me.DeleteRevCmdBtn)
         Me.Controls.Add(Me.ProcCboBox)
         Me.Controls.Add(Me.Panel1)
@@ -412,6 +439,8 @@ Partial Class RecipeEdit
         CType(Me.DataGridView3, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
+        CType(Me.MoveStepDownBtn, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.MoveStepUpBtn, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -453,5 +482,7 @@ Partial Class RecipeEdit
     Friend WithEvents Column3 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Column4 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Column5 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents MoveStepDownBtn As System.Windows.Forms.PictureBox
+    Friend WithEvents MoveStepUpBtn As System.Windows.Forms.PictureBox
 
 End Class

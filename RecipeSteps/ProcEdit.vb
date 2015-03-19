@@ -7,10 +7,12 @@ Imports System.Data.SqlClient
 
 Public Class ProcEdit
 
+    'SQL Connection
     Private myConn As SqlConnection
     Private myCmd As SqlCommand
     Private myReader As SqlDataReader
 
+    'Form Variables
     Dim RecipeKey As String
     Dim RecipeID As Integer
     Dim RecipeStepID As Integer
@@ -21,8 +23,10 @@ Public Class ProcEdit
     Dim ParamTarget As Integer
     Dim ParamUOM As String
 
+    'Used to tell parent form item has changed and alert user if changes need saved
     Dim FormChanged As Boolean = False
 
+    'Open Form
     Public Sub New(ByVal PassedRecipeKey As String, ByVal PassedRecipeID As String, ByVal PassedRecipeStepID As Integer)
 
         InitializeComponent()
@@ -40,19 +44,7 @@ Public Class ProcEdit
 
     End Sub
 
-    Public Property FormHasChanged() As Boolean
-
-        Get
-            Return FormChanged
-        End Get
-
-        Set(ByVal value As Boolean)
-            FormChanged = value
-        End Set
-
-    End Property
-
-
+    'Initialize
     Private Sub LoadStep()
 
         'Create a Connection object.
@@ -104,32 +96,8 @@ Public Class ProcEdit
 
     End Sub
 
-    Private Sub ExitCmdBtn_Click(sender As Object, e As EventArgs) Handles ExitCmdBtn.Click
 
-        If FormChanged Then
-            If MessageBox.Show("Changes have been made. Do you wish to save?", "Save?", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-                UpdateRow()
-            End If
-        Else
-            FormChanged = False
-        End If
-
-        Close()
-
-    End Sub
-
-    Private Sub SaveCmdBtn_Click(sender As Object, e As EventArgs) Handles SaveCmdBtn.Click
-
-        If FormChanged Then
-            If MessageBox.Show("Are you sure you want to save these changes?", "Save?", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-                UpdateRow()
-            End If
-        End If
-
-        Close()
-
-    End Sub
-
+    'Helper methods
     Private Sub UpdateRow()
 
         'Create a Connection object.
@@ -148,26 +116,6 @@ Public Class ProcEdit
         'Close the reader and the database connection.
         myReader.Close()
         myConn.Close()
-
-    End Sub
-
-    Private Sub ParamTargetTxtBox_Leave(sender As Object, e As EventArgs) Handles ParamTargetTxtBox.Leave
-
-        If Not IsNumeric(ParamTargetTxtBox.Text) Then
-            MessageBox.Show("Value must numeric")
-        End If
-
-    End Sub
-
-    Private Sub ParamTargetTxtBox_TextChanged(sender As Object, e As EventArgs) Handles ParamTargetTxtBox.TextChanged
-
-        FormChanged = True
-
-    End Sub
-
-    Private Sub StepInstructionsTxtBox_TextChanged(sender As Object, e As EventArgs) Handles StepInstructionsTxtBox.TextChanged
-
-        FormChanged = True
 
     End Sub
 
@@ -213,7 +161,69 @@ Public Class ProcEdit
         Close()
     End Sub
 
+    'Text changed - validate and alert user
+    Private Sub ParamTargetTxtBox_Leave(sender As Object, e As EventArgs) Handles ParamTargetTxtBox.Leave
+
+        If Not IsNumeric(ParamTargetTxtBox.Text) Then
+            MessageBox.Show("Value must numeric")
+        End If
+
+    End Sub
+
+    Private Sub ParamTargetTxtBox_TextChanged(sender As Object, e As EventArgs) Handles ParamTargetTxtBox.TextChanged
+
+        FormChanged = True
+
+    End Sub
+
+    Private Sub StepInstructionsTxtBox_TextChanged(sender As Object, e As EventArgs) Handles StepInstructionsTxtBox.TextChanged
+
+        FormChanged = True
+
+    End Sub
+
+    
+    'Buttons
     Private Sub DeleteCmdBtn_Click(sender As Object, e As EventArgs) Handles DeleteCmdBtn.Click
         DeleteStep()
     End Sub
+
+    Private Sub SaveCmdBtn_Click(sender As Object, e As EventArgs) Handles SaveCmdBtn.Click
+
+        If FormChanged Then
+            If MessageBox.Show("Are you sure you want to save these changes?", "Save?", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+                UpdateRow()
+            End If
+        End If
+
+        Close()
+
+    End Sub
+
+    'Close Form
+    Private Sub ExitCmdBtn_Click(sender As Object, e As EventArgs) Handles ExitCmdBtn.Click
+
+        If FormChanged Then
+            If MessageBox.Show("Changes have been made. Do you wish to save?", "Save?", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+                UpdateRow()
+            End If
+        Else
+            FormChanged = False
+        End If
+
+        Close()
+
+    End Sub
+
+    Public Property FormHasChanged() As Boolean
+
+        Get
+            Return FormChanged
+        End Get
+
+        Set(ByVal value As Boolean)
+            FormChanged = value
+        End Set
+
+    End Property
 End Class

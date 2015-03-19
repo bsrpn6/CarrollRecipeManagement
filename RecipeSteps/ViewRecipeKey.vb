@@ -7,20 +7,24 @@ Imports System.Data.SqlClient
 
 Public Class ViewRecipeKey
 
+    'Get logged in username
     Public Shared ReadOnly Property UserName As String
         Get
             UserName = Environment.UserName
         End Get
     End Property
 
+    'SQL Connection
     Private myConn As SqlConnection
     Private myCmd As SqlCommand
     Private myReader As SqlDataReader
 
+    'Global Recipe Information
     Dim RecipeKey As String
     Dim RecipeID As Integer
     Dim RecipeRev As Integer
 
+    'Form Variables
     Dim RecipeItem As String
     Dim RecipeName As String
     Dim RecipeHeaderDescr As String
@@ -36,6 +40,7 @@ Public Class ViewRecipeKey
     Dim RevCreateBy As String
     Dim RevApproveBy As String
 
+    'Form Open
     Public Sub New(ByVal PassedRecipeKey As String, ByVal PassedRecipeID As String, ByVal PassedRecipeRev As Integer)
         InitializeComponent()
         RecipeKey = PassedRecipeKey
@@ -43,6 +48,13 @@ Public Class ViewRecipeKey
         RecipeRev = PassedRecipeRev
     End Sub
 
+    Private Sub ViewRecipe_Load(sender As Object, e As EventArgs) Handles Me.Load
+        LoadRecipe()
+        LoadSteps()
+        CenterToScreen()
+    End Sub
+
+    'Initialization
     Public Sub LoadRecipe()
 
 
@@ -124,12 +136,6 @@ Public Class ViewRecipeKey
 
     End Sub
 
-    Private Sub ViewRecipe_Load(sender As Object, e As EventArgs) Handles Me.Load
-        LoadRecipe()
-        LoadSteps()
-        CenterToScreen()
-    End Sub
-
     Private Sub LoadSteps()
 
         DataGridView1.Rows.Clear()
@@ -206,10 +212,7 @@ Public Class ViewRecipeKey
 
     End Sub
 
-    Private Sub ExitBtn_Click(sender As Object, e As EventArgs) Handles ExitBtn.Click
-        Close()
-    End Sub
-
+    'Buttons
     Private Sub EditRecipeBtn_Click(sender As Object, e As EventArgs) Handles EditRecipeCmdBtn.Click
 
         If Not IsEdit Then
@@ -224,6 +227,7 @@ Public Class ViewRecipeKey
 
     End Sub
 
+    'Helper method
     Public Sub CreateNewRevision()
 
         Dim ReturnValue As Integer
@@ -233,5 +237,10 @@ Public Class ViewRecipeKey
             Close()
         End If
 
+    End Sub
+
+    'Close form
+    Private Sub ExitBtn_Click(sender As Object, e As EventArgs) Handles ExitBtn.Click
+        Close()
     End Sub
 End Class

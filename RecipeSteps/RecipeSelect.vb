@@ -7,33 +7,49 @@ Imports System.Data.SqlClient
 
 Public Class RecipeSelect
 
+    'Get logged in username
     Public Shared ReadOnly Property UserName As String
         Get
             UserName = Environment.UserName
         End Get
     End Property
 
+    'Manual events to trigger form refresh on child form close
     Private WithEvents RecipeEditClose As RecipeEdit
 
+    'SQL Connection
     Private myConn As SqlConnection
     Private myCmd As SqlCommand
     Private myReader As SqlDataReader
 
+    'DataGridView selection variables
     Private fromIndex As Integer
     Private dragIndex As Integer
     Private dragRect As Rectangle
 
+    'Global Recipe Information
     Dim RecipeItem As String
-    Dim ActiveOrAll As Boolean = True
-
     Dim SelectedRecipe As String
     Dim SelectedRecipeRev As Integer
     Dim SelectedRecipeIsEdit As Boolean
     Dim SelectedRecipeID As Integer
 
+    'Used on form load/refresh to display active or all recipes
+    Dim ActiveOrAll As Boolean = True
+
+    'Form Open
+    Private Sub RecipeSelect_Load(sender As Object, e As EventArgs) Handles Me.Load
+        LoadRecipes()
+        CenterToScreen()
+    End Sub
+
     Public Sub LoadRecipes()
 
         DataGridView1.Rows.Clear()
+        SelectedRecipe = Nothing
+        SelectedRecipeRev = Nothing
+        SelectedRecipeIsEdit = Nothing
+        SelectedRecipeID = Nothing
 
         'Create a Connection object.
         myConn = DatabaseConnection.CreateSQLConnection()
@@ -50,6 +66,8 @@ Public Class RecipeSelect
         If ActiveOrAll Then
             myCmd.CommandText = myCmd.CommandText & " AND [IsActive] = 'True'"
         End If
+
+        myCmd.CommandText = myCmd.CommandText & "ORDER BY [RecipeKey], [RecipeRev] ASC"
 
         'Open the connection.
         myConn.Open()
@@ -87,31 +105,16 @@ Public Class RecipeSelect
         DataGridView1.ClearSelection()
 
     End Sub
-
-    Private Sub RecipeSelect_Load(sender As Object, e As EventArgs) Handles Me.Load
-        LoadRecipes()
-        CenterToScreen()
-    End Sub
-
+    
+    'Text box change filter view
     Private Sub RecipeItem_KeyDown(sender As Object, e As KeyEventArgs) Handles RecipeItemTxtBox.KeyDown
         If e.KeyData = Keys.Return Then
             RecipeItem = RecipeItemTxtBox.Text
             LoadRecipes()
-            'RecipeItemTxtBox.Clear()
         End If
     End Sub
 
-
-    Private Sub ActiveRdoBtn_CheckedChanged(sender As Object, e As EventArgs) Handles ActiveRdoBtn.CheckedChanged
-        If ActiveRdoBtn.Checked Then
-            ActiveOrAll = True
-        ElseIf AllRdoBtn.Checked Then
-            ActiveOrAll = False
-        End If
-
-        LoadRecipes()
-    End Sub
-
+    'DataGridView Item Selection
     Private Sub DataGridView1_CellClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles DataGridView1.CellClick
 
         Dim SelectedRecipeValue As Object
@@ -149,18 +152,48 @@ Public Class RecipeSelect
         End If
     End Sub
 
-    Private Sub EditBtn_Click(sender As Object, e As EventArgs) Handles EditBtn.Click
-        If Not SelectedRecipeIsEdit Then
-            CreateNewRevision()
-        Else
-            RecipeEditClose = New RecipeEdit(SelectedRecipe, SelectedRecipeID)
-            RecipeEditClose.Show()
+    'Buttons
+    Private Sub ActiveRdoBtn_CheckedChanged(sender As Object, e As EventArgs) Handles ActiveRdoBtn.CheckedChanged
+        If ActiveRdoBtn.Checked Then
+            ActiveOrAll = True
+        ElseIf AllRdoBtn.Checked Then
+            ActiveOrAll = False
+        End If
 
-            AddHandler RecipeEditClose.FormClosed, AddressOf RecipeEditClosed
+        LoadRecipes()
+    End Sub
+
+    Private Sub ViewBtn_Click(sender As Object, e As EventArgs) Handles ViewBtn.Click
+
+        If SelectedRecipeID > 0 Then
+            Dim oForm As ViewRecipeKey
+            oForm = New ViewRecipeKey(SelectedRecipe, SelectedRecipeID, SelectedRecipeRev)
+            oForm.Show()
+            oForm = Nothing
+        Else
+            MessageBox.Show("Please make a selection.")
         End If
 
     End Sub
 
+    Private Sub EditBtn_Click(sender As Object, e As EventArgs) Handles EditBtn.Click
+
+        If SelectedRecipeID > 0 Then
+            If Not SelectedRecipeIsEdit Then
+                CreateNewRevision()
+            Else
+                RecipeEditClose = New RecipeEdit(SelectedRecipe, SelectedRecipeID)
+                RecipeEditClose.Show()
+
+                AddHandler RecipeEditClose.FormClosed, AddressOf RecipeEditClosed
+            End If
+        Else
+            MessageBox.Show("Please make a selection.")
+        End If
+
+    End Sub
+
+    'Helper methods
     Public Sub CreateNewRevision()
 
         Dim ReturnValue As Integer
@@ -180,17 +213,12 @@ Public Class RecipeSelect
 
     End Sub
 
+    'Form Close
     Private Sub ExitApplicationCmdbtn_Click(sender As Object, e As EventArgs) Handles ExitApplicationCmdbtn.Click
         Application.Exit()
     End Sub
-
-    Private Sub ViewBtn_Click(sender As Object, e As EventArgs) Handles ViewBtn.Click
-        Dim oForm As ViewRecipeKey
-        oForm = New ViewRecipeKey(SelectedRecipe, SelectedRecipeID, SelectedRecipeRev)
-        oForm.Show()
-        oForm = Nothing
-    End Sub
-
+    
+    'Chid Form Has Changed
     Private Sub RecipeEditClosed(sender As Object, e As FormClosedEventArgs)
 
         If RecipeEditClose.RecipeHasChanged Then
