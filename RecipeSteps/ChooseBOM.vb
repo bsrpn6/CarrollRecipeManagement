@@ -121,70 +121,12 @@ Public Class ChooseBOM
 
     End Sub
 
-    Private Sub RecipeStepInsert(ByVal RecipeID As Integer, ByVal RecipeStepID As Integer, ByVal TempalteID As Integer, ByVal RecipeBomItem As String)
-
-        'Create a Connection object.
-        myConn = DatabaseConnection.CreateSQLConnection()
-
-        'Create a Command object.
-        myCmd = myConn.CreateCommand
-
-        myCmd.CommandText = "edtRecipeStepInsert"
-        myCmd.CommandType = CommandType.StoredProcedure
-
-
-        ''@RecipeID int,
-        ''@RecipeStepID int,
-        ''@TemplateID int,
-        ''@RecipeBOMItem varchar(16),
-        ''@ErrorMsg varchar(40) OUTPUT
-
-        myCmd.Parameters.AddWithValue("RecipeID", RecipeID)
-        myCmd.Parameters.AddWithValue("RecipeStepID", RecipeStepID)
-
-        If TempalteID = Nothing Then
-            myCmd.Parameters.AddWithValue("TemplateID", DBNull.Value)
-        Else
-            myCmd.Parameters.AddWithValue("TemplateID", TempalteID)
-        End If
-
-        If RecipeBomItem = Nothing Then
-            myCmd.Parameters.AddWithValue("RecipeBOMItem", DBNull.Value)
-        Else
-            myCmd.Parameters.AddWithValue("RecipeBOMItem", RecipeBomItem)
-        End If
-
-        'myCmd.Parameters.AddWithValue("ErrorMsg", "NULL")
-        Dim ErrorMsg As SqlParameter = myCmd.Parameters.Add("ErrorMsg", SqlDbType.VarChar)
-        ErrorMsg.Direction = ParameterDirection.Output
-        ErrorMsg.Size = 40
-
-
-        Dim ReturnValue As SqlParameter = myCmd.Parameters.Add("ReturnVal", SqlDbType.Int)
-        ReturnValue.Direction = ParameterDirection.ReturnValue
-
-        'Open the connection.
-        myConn.Open()
-
-        myReader = myCmd.ExecuteReader()
-
-        If ReturnValue.Value < 0 Then
-            MessageBox.Show("Error # (" & ReturnValue.Value.ToString & "): " & ErrorMsg.Value.ToString)
-            Return
-        End If
-
-        'Close the reader and the database connection.
-        myReader.Close()
-        myConn.Close()
-
-    End Sub
-
     Private Sub ExitCmdBtn_Click(sender As Object, e As EventArgs) Handles ExitCmdBtn.Click
 
         If FormChanged Then
 
             If MessageBox.Show("Changes have been made. Do you wish to save?", "Save?", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-                RecipeStepInsert(RecipeID, RecipeStepID, RecipeTemplateID, RecipeBOMItem)
+                DatabaseConnection.RecipeStepInsert(RecipeID, RecipeStepID, RecipeTemplateID, RecipeBOMItem)
             End If
 
         End If
@@ -198,7 +140,7 @@ Public Class ChooseBOM
         If FormChanged Then
 
             If MessageBox.Show("Are you sure you want to save these changes?", "Save?", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-                RecipeStepInsert(RecipeID, RecipeStepID, RecipeTemplateID, RecipeBOMItem)
+                DatabaseConnection.RecipeStepInsert(RecipeID, RecipeStepID, RecipeTemplateID, RecipeBOMItem)
             End If
 
         End If

@@ -23,6 +23,7 @@ Partial Class ChooseBOM
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ChooseBOM))
         Me.SaveCmdBtn = New System.Windows.Forms.Button()
         Me.ExitCmdBtn = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -226,6 +227,7 @@ Partial Class ChooseBOM
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.ExitCmdBtn)
         Me.Controls.Add(Me.SaveCmdBtn)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "ChooseBOM"
         Me.Text = "Edit Step"
         Me.ResumeLayout(False)
