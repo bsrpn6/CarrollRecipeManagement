@@ -120,45 +120,10 @@ Public Class ProcEdit
     End Sub
 
     Private Sub DeleteStep()
-        'Create a Connection object.
-        myConn = DatabaseConnection.CreateSQLConnection()
-
-        'Create a Command object.
-        myCmd = myConn.CreateCommand
-
-        myCmd.CommandText = "edtRecipeStepDelete"
-        myCmd.CommandType = CommandType.StoredProcedure
-
-        '' @RecipeID int,
-        '' @RecipeStepID int,
-        '' @ErrorMsg varchar(40) OUTPUT
-
-        myCmd.Parameters.AddWithValue("RecipeID", RecipeID)
-        myCmd.Parameters.AddWithValue("RecipeStepID", RecipeStepID)
-        'myCmd.Parameters.AddWithValue("ErrorMsg", "NULL")
-        Dim ErrorMsg As SqlParameter = myCmd.Parameters.Add("ErrorMsg", SqlDbType.VarChar)
-        ErrorMsg.Direction = ParameterDirection.Output
-        ErrorMsg.Size = 40
-
-        Dim ReturnValue As SqlParameter = myCmd.Parameters.Add("ReturnVal", SqlDbType.Int)
-        ReturnValue.Direction = ParameterDirection.ReturnValue
-
-        'Open the connection.
-        myConn.Open()
-
-        myCmd.ExecuteReader()
-        'myReader = myCmd.ExecuteReader()
-
-        If ReturnValue.Value < 0 Then
-            MessageBox.Show("Error # (" & ReturnValue.Value.ToString & "): " & ErrorMsg.Value.ToString)
-            Return
+        If DatabaseConnection.DeleteStep(RecipeID, RecipeStepID) > 0 Then
+            FormChanged = True
+            Close()
         End If
-
-        myConn.Close()
-
-        FormChanged = True
-
-        Close()
     End Sub
 
     'Text changed - validate and alert user

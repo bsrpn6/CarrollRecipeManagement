@@ -62,7 +62,6 @@ Public Class DatabaseConnection
 
         If ReturnValue.Value < 0 Then
             MessageBox.Show("Error # (" & ReturnValue.Value.ToString & "): " & ErrorMsg.Value.ToString)
-            Return Nothing
         End If
 
         myConn.Close()
@@ -163,6 +162,7 @@ Public Class DatabaseConnection
 
         Dim myConn As SqlConnection
         Dim myCmd As SqlCommand
+
         'Create a Connection object.
         myConn = DatabaseConnection.CreateSQLConnection()
 
@@ -197,7 +197,150 @@ Public Class DatabaseConnection
 
         If ReturnValue.Value < 0 Then
             MessageBox.Show("Error # (" & ReturnValue.Value.ToString & "): " & ErrorMsg.Value.ToString)
-            Return Nothing
+        End If
+
+        myConn.Close()
+
+        Return ReturnValue.Value
+    End Function
+
+    Public Shared Function RecipeStepInsert(ByVal RecipeID As Integer, ByVal RecipeStepID As Integer, ByVal TempalteID As Integer, ByVal RecipeBomItem As String) As Integer
+
+        Dim myConn As SqlConnection
+        Dim myCmd As SqlCommand
+
+        'Create a Connection object.
+        myConn = DatabaseConnection.CreateSQLConnection()
+
+        'Create a Command object.
+        myCmd = myConn.CreateCommand
+
+        myCmd.CommandText = "edtRecipeStepInsert"
+        myCmd.CommandType = CommandType.StoredProcedure
+
+        ''@RecipeID int,
+        ''@RecipeStepID int,
+        ''@TemplateID int,
+        ''@RecipeBOMItem varchar(16),
+        ''@ErrorMsg varchar(40) OUTPUT
+
+        myCmd.Parameters.AddWithValue("RecipeID", RecipeID)
+        myCmd.Parameters.AddWithValue("RecipeStepID", RecipeStepID)
+
+        If TempalteID = Nothing Then
+            myCmd.Parameters.AddWithValue("TemplateID", DBNull.Value)
+        Else
+            myCmd.Parameters.AddWithValue("TemplateID", TempalteID)
+        End If
+
+        If RecipeBomItem = Nothing Then
+            myCmd.Parameters.AddWithValue("RecipeBOMItem", DBNull.Value)
+        Else
+            myCmd.Parameters.AddWithValue("RecipeBOMItem", RecipeBomItem)
+        End If
+
+        'myCmd.Parameters.AddWithValue("ErrorMsg", "NULL")
+        Dim ErrorMsg As SqlParameter = myCmd.Parameters.Add("ErrorMsg", SqlDbType.VarChar)
+        ErrorMsg.Direction = ParameterDirection.Output
+        ErrorMsg.Size = 40
+
+
+        Dim ReturnValue As SqlParameter = myCmd.Parameters.Add("ReturnVal", SqlDbType.Int)
+        ReturnValue.Direction = ParameterDirection.ReturnValue
+
+        'Open the connection.
+        myConn.Open()
+
+        myCmd.ExecuteReader()
+
+        If ReturnValue.Value < 0 Then
+            MessageBox.Show("Error # (" & ReturnValue.Value.ToString & "): " & ErrorMsg.Value.ToString)
+        End If
+
+        'Close the reader and the database connection.
+        myConn.Close()
+
+        Return ReturnValue.Value
+
+    End Function
+
+    Public Shared Function UpdateBOM(ByVal RecipeID As String) As Integer
+        Dim myConn As SqlConnection
+        Dim myCmd As SqlCommand
+
+        'Create a Connection object.
+        myConn = DatabaseConnection.CreateSQLConnection()
+
+        'Create a Command object.
+        myCmd = myConn.CreateCommand
+
+        myCmd.CommandText = "edtUpdateBOM"
+        myCmd.CommandType = CommandType.StoredProcedure
+
+        ''@RecipeID int,
+        ''@ErrorMsg varchar(40) OUTPUT
+
+        myCmd.Parameters.AddWithValue("RecipeID", RecipeID)
+        'myCmd.Parameters.AddWithValue("ErrorMsg", "NULL")
+        Dim ErrorMsg As SqlParameter = myCmd.Parameters.Add("ErrorMsg", SqlDbType.VarChar)
+        ErrorMsg.Direction = ParameterDirection.Output
+        ErrorMsg.Size = 40
+
+
+        Dim ReturnValue As SqlParameter = myCmd.Parameters.Add("ReturnVal", SqlDbType.Int)
+        ReturnValue.Direction = ParameterDirection.ReturnValue
+
+        'Open the connection.
+        myConn.Open()
+
+        myCmd.ExecuteReader()
+        'myReader = myCmd.ExecuteReader()
+
+        If ReturnValue.Value < 0 Then
+            MessageBox.Show("Error # (" & ReturnValue.Value.ToString & "): " & ErrorMsg.Value.ToString)
+        End If
+
+        myConn.Close()
+
+        Return ReturnValue.Value
+
+    End Function
+
+    Public Shared Function DeleteStep(ByVal RecipeID As Integer, ByVal RecipeStepID As Integer) As Integer
+        Dim myConn As SqlConnection
+        Dim myCmd As SqlCommand
+
+        'Create a Connection object.
+        myConn = DatabaseConnection.CreateSQLConnection()
+
+        'Create a Command object.
+        myCmd = myConn.CreateCommand
+
+        myCmd.CommandText = "edtRecipeStepDelete"
+        myCmd.CommandType = CommandType.StoredProcedure
+
+        '' @RecipeID int,
+        '' @RecipeStepID int,
+        '' @ErrorMsg varchar(40) OUTPUT
+
+        myCmd.Parameters.AddWithValue("RecipeID", RecipeID)
+        myCmd.Parameters.AddWithValue("RecipeStepID", RecipeStepID)
+        'myCmd.Parameters.AddWithValue("ErrorMsg", "NULL")
+        Dim ErrorMsg As SqlParameter = myCmd.Parameters.Add("ErrorMsg", SqlDbType.VarChar)
+        ErrorMsg.Direction = ParameterDirection.Output
+        ErrorMsg.Size = 40
+
+        Dim ReturnValue As SqlParameter = myCmd.Parameters.Add("ReturnVal", SqlDbType.Int)
+        ReturnValue.Direction = ParameterDirection.ReturnValue
+
+        'Open the connection.
+        myConn.Open()
+
+        myCmd.ExecuteReader()
+        'myReader = myCmd.ExecuteReader()
+
+        If ReturnValue.Value < 0 Then
+            MessageBox.Show("Error # (" & ReturnValue.Value.ToString & "): " & ErrorMsg.Value.ToString)
         End If
 
         myConn.Close()

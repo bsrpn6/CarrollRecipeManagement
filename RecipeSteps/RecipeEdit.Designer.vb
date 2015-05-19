@@ -432,6 +432,7 @@ Partial Class RecipeEdit
         Me.Controls.Add(Me.DataGridView3)
         Me.Controls.Add(Me.DataGridView2)
         Me.Controls.Add(Me.DataGridView1)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "RecipeEdit"
         Me.Text = "Work Order Recipe Creation"
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()

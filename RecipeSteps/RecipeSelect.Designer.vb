@@ -24,6 +24,7 @@ Partial Class RecipeSelect
     Private Sub InitializeComponent()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(RecipeSelect))
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
         Me.Item = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.RecipeName = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -44,7 +45,7 @@ Partial Class RecipeSelect
         Me.EditBtn = New System.Windows.Forms.Button()
         Me.AllRdoBtn = New System.Windows.Forms.RadioButton()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.ExitApplicationCmdbtn = New System.Windows.Forms.Button()
+        Me.ExitCmdbtn = New System.Windows.Forms.Button()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
@@ -224,15 +225,15 @@ Partial Class RecipeSelect
         Me.Panel1.Size = New System.Drawing.Size(200, 34)
         Me.Panel1.TabIndex = 10
         '
-        'ExitApplicationCmdbtn
+        'ExitCmdbtn
         '
-        Me.ExitApplicationCmdbtn.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ExitApplicationCmdbtn.Location = New System.Drawing.Point(876, 768)
-        Me.ExitApplicationCmdbtn.Name = "ExitApplicationCmdbtn"
-        Me.ExitApplicationCmdbtn.Size = New System.Drawing.Size(150, 41)
-        Me.ExitApplicationCmdbtn.TabIndex = 11
-        Me.ExitApplicationCmdbtn.Text = "Exit Application"
-        Me.ExitApplicationCmdbtn.UseVisualStyleBackColor = True
+        Me.ExitCmdbtn.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ExitCmdbtn.Location = New System.Drawing.Point(876, 768)
+        Me.ExitCmdbtn.Name = "ExitCmdbtn"
+        Me.ExitCmdbtn.Size = New System.Drawing.Size(150, 41)
+        Me.ExitCmdbtn.TabIndex = 11
+        Me.ExitCmdbtn.Text = "Exit"
+        Me.ExitCmdbtn.UseVisualStyleBackColor = True
         '
         'RecipeSelect
         '
@@ -240,13 +241,14 @@ Partial Class RecipeSelect
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(1274, 821)
-        Me.Controls.Add(Me.ExitApplicationCmdbtn)
+        Me.Controls.Add(Me.ExitCmdbtn)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.EditBtn)
         Me.Controls.Add(Me.ViewBtn)
         Me.Controls.Add(Me.RecipeItemTxtBox)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.DataGridView1)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "RecipeSelect"
         Me.Text = "Work Order Recipe Creation"
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
@@ -276,6 +278,6 @@ Partial Class RecipeSelect
     Friend WithEvents UOM As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents RecipeKey As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents RecipeID As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents ExitApplicationCmdbtn As System.Windows.Forms.Button
+    Friend WithEvents ExitCmdbtn As System.Windows.Forms.Button
 
 End Class

@@ -22,6 +22,7 @@ Partial Class ProcEdit
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ProcEdit))
         Me.SaveCmdBtn = New System.Windows.Forms.Button()
         Me.ExitCmdBtn = New System.Windows.Forms.Button()
         Me.RecipeStepIDTxtBox = New System.Windows.Forms.TextBox()
@@ -89,7 +90,7 @@ Partial Class ProcEdit
         Me.StepTypeTxtBox.Location = New System.Drawing.Point(199, 104)
         Me.StepTypeTxtBox.Name = "StepTypeTxtBox"
         Me.StepTypeTxtBox.ReadOnly = True
-        Me.StepTypeTxtBox.Size = New System.Drawing.Size(100, 19)
+        Me.StepTypeTxtBox.Size = New System.Drawing.Size(149, 19)
         Me.StepTypeTxtBox.TabIndex = 14
         '
         'Label2
@@ -194,6 +195,7 @@ Partial Class ProcEdit
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.ExitCmdBtn)
         Me.Controls.Add(Me.SaveCmdBtn)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "ProcEdit"
         Me.Text = "Edit Step"
         Me.ResumeLayout(False)

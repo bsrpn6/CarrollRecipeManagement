@@ -22,6 +22,7 @@ Partial Class StepEdit
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(StepEdit))
         Me.SaveCmdBtn = New System.Windows.Forms.Button()
         Me.ExitCmdBtn = New System.Windows.Forms.Button()
         Me.RecipeStepIDTxtBox = New System.Windows.Forms.TextBox()
@@ -97,7 +98,7 @@ Partial Class StepEdit
         Me.StepTypeTxtBox.Location = New System.Drawing.Point(199, 65)
         Me.StepTypeTxtBox.Name = "StepTypeTxtBox"
         Me.StepTypeTxtBox.ReadOnly = True
-        Me.StepTypeTxtBox.Size = New System.Drawing.Size(100, 19)
+        Me.StepTypeTxtBox.Size = New System.Drawing.Size(149, 19)
         Me.StepTypeTxtBox.TabIndex = 14
         '
         'Label2
@@ -131,7 +132,7 @@ Partial Class StepEdit
         Me.StepItemTxtBox.Location = New System.Drawing.Point(199, 90)
         Me.StepItemTxtBox.Name = "StepItemTxtBox"
         Me.StepItemTxtBox.ReadOnly = True
-        Me.StepItemTxtBox.Size = New System.Drawing.Size(100, 19)
+        Me.StepItemTxtBox.Size = New System.Drawing.Size(149, 19)
         Me.StepItemTxtBox.TabIndex = 20
         '
         'Label6
@@ -173,7 +174,7 @@ Partial Class StepEdit
         Me.StepItemDescTxtBox.Location = New System.Drawing.Point(199, 115)
         Me.StepItemDescTxtBox.Name = "StepItemDescTxtBox"
         Me.StepItemDescTxtBox.ReadOnly = True
-        Me.StepItemDescTxtBox.Size = New System.Drawing.Size(100, 19)
+        Me.StepItemDescTxtBox.Size = New System.Drawing.Size(149, 19)
         Me.StepItemDescTxtBox.TabIndex = 22
         '
         'Label8
@@ -294,6 +295,7 @@ Partial Class StepEdit
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.ExitCmdBtn)
         Me.Controls.Add(Me.SaveCmdBtn)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "StepEdit"
         Me.Text = "Edit Step"
         Me.ResumeLayout(False)

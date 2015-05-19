@@ -230,10 +230,7 @@ Public Class ViewRecipeKey
     'Helper method
     Public Sub CreateNewRevision()
 
-        Dim ReturnValue As Integer
-        ReturnValue = DatabaseConnection.CreateNewRevision(RecipeID, UserName)
-
-        If ReturnValue > 0 Then
+        If DatabaseConnection.CreateNewRevision(RecipeID, UserName) > 0 Then
             Close()
         End If
 

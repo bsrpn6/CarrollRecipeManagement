@@ -23,6 +23,7 @@ Partial Class ViewRecipeKey
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ViewRecipeKey))
         Me.Label1 = New System.Windows.Forms.Label()
         Me.EditRecipeCmdBtn = New System.Windows.Forms.Button()
         Me.ExitBtn = New System.Windows.Forms.Button()
@@ -464,6 +465,7 @@ Partial Class ViewRecipeKey
         Me.Controls.Add(Me.ExitBtn)
         Me.Controls.Add(Me.EditRecipeCmdBtn)
         Me.Controls.Add(Me.Label1)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "ViewRecipeKey"
         Me.Text = "Work Order Recipe Creation"
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()

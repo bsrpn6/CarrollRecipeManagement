@@ -214,8 +214,8 @@ Public Class RecipeSelect
     End Sub
 
     'Form Close
-    Private Sub ExitApplicationCmdbtn_Click(sender As Object, e As EventArgs) Handles ExitApplicationCmdbtn.Click
-        Application.Exit()
+    Private Sub ExitApplicationCmdbtn_Click(sender As Object, e As EventArgs) Handles ExitCmdbtn.Click
+        Close()
     End Sub
     
     'Chid Form Has Changed
